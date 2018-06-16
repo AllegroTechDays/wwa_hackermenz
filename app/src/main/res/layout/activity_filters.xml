@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    style="@style/Theme.AppCompat.NoActionBar">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">\
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_description"
+        android:text="@string/time" />
+
+    <org.florescu.android.rangeseekbar.RangeSeekBar
+        android:id="@+id/seekbar_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_description"
+        android:text="@string/avg_speed" />
+
+    <org.florescu.android.rangeseekbar.RangeSeekBar
+        android:id="@+id/seekbar_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fl_content"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_description"
+        android:text="@string/type_bike" />
+
+    <Spinner
+        android:layout_marginTop="10dp"
+        android:id="@+id/spinner_bike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ></Spinner>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="true"
+        android:text="@string/next"/>
+
+</RelativeLayout>
