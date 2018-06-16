@@ -1,6 +1,8 @@
 <ion-searchbar 
+  mode="md"
   (ionInput)="getLocals($event)" 
   debounce="700" 
+  [ngModel]="query"
   placeholder="{{placeholder}}">
 </ion-searchbar>
 <ion-list>

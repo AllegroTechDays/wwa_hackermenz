@@ -11,6 +11,7 @@ declare const google: any;
 export class RoutePreviewComponent implements AfterViewInit {
 
   @Input() path: any
+  @Input() markers: any
   @ViewChild('map') mapEl: ElementRef
   mapPath: any;
   map: any
@@ -24,6 +25,14 @@ export class RoutePreviewComponent implements AfterViewInit {
         center: {lat: 0, lng: -180},
         mapTypeId: 'terrain'
       });
+      if (this.markers) {
+        this.markers.forEach((marker) => {
+          new google.maps.Marker({
+            position: marker,
+            map: this.map
+          });
+        })
+      }
       this.drawPath()
     }, 500)
   }

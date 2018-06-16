@@ -7,14 +7,25 @@
 <ion-content>
   <route-preview 
     *ngIf="currentPath" 
-    [path]="currentPath"></route-preview>
-  <div padding>
+    [path]="currentPath"
+    [markers]="markers"></route-preview>
+  <div padding *ngIf="currentPath">
     <ion-card class="choose-route__path-info" padding-bottom>
       <div class="choose-route__path-info-head">
         <div class="choose-route__path-info-title">
           Route details
+          <div>
+            <small>({{ currentActivityIdx + 1 }}/{{activities.length }})</small>
+          </div>
         </div>
-        <button ion-button (click)="next()">Next</button>
+        <div class="choose-route__path-info-buttons">
+          <button ion-button (click)="back()" margin-right>
+            <ion-icon name="arrow-back"></ion-icon>
+          </button>
+          <button ion-button (click)="next()">
+            <ion-icon name="arrow-forward"></ion-icon>
+          </button>
+        </div>
       </div>
       <ion-grid [ngClass]="'choose-route__path-info-grid'">
         <ion-row>

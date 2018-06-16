@@ -28,7 +28,17 @@ export class SelectTypePage {
   ) { }
 
   selectType(type) {
-    this.navCtrl.push('ChooseRoutePage', { type })
+    const opts = {
+      ...this.navParams.get('opts') || {}
+    }
+    const params = {
+      ...this.navParams.get('params') || {}
+    }
+    opts.type = type
+    if (type === 'custom') {
+      return this.navCtrl.push('CustomFormPage', { opts, params })
+    }
+    this.navCtrl.push('ChooseRoutePage', { opts, params })
   }
 
 }

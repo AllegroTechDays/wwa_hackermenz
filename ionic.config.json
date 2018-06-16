@@ -7,8 +7,8 @@
     "cordova": {}
   },
   "proxies": [{
-    "path": "/google-place-api/",
-    "proxyUrl": "https://maps.googleapis.com/maps/api/place/"
+    "path": "/google-api/",
+    "proxyUrl": "https://maps.googleapis.com/maps/api/"
   }, {
     "path": "/rowerowa-polska-api/",
     "proxyUrl": "https://api.rowerowapolska.pl/"

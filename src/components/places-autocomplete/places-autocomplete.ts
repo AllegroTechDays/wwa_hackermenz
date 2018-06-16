@@ -1,5 +1,5 @@
 import { HTTP } from '@ionic-native/http';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { Component, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 
@@ -37,16 +37,18 @@ export class PlacesAutocompleteComponent {
   locals: any[];
 
   googleApi: string;
+  query: string = ''
 
   constructor(
     @Inject(Http) public http: Http, 
     private platform: Platform,
-    private nativeHttp: HTTP
+    private nativeHttp: HTTP,
+    private alertCtrl: AlertController
   ) {
     if (this.placeholder == null) {
       this.placeholder = "Search";
     }
-    this.googleApi = this.platform.is('cordova') ? 'https://maps.googleapis.com/maps/api/place/' : '/google-place-api/'
+    this.googleApi = this.platform.is('cordova') ? 'https://maps.googleapis.com/maps/api/' : '/google-api/'
   }
 
   public autocomplete(input: string): any {
@@ -60,9 +62,9 @@ export class PlacesAutocompleteComponent {
     let strictboundsParam: string = this.strictbounds != null ? ("&strictbounds=" + this.strictbounds) : "";
     let params = typesParam + typeParam + offsetParam + locationParam + radiusParam + languageParam + componentsParam + strictboundsParam;
     if (this.platform.is('cordova') && this.platform.is('ios')) {
-      return this.nativeHttp.get(this.googleApi + "autocomplete/json?input="+input+"&key="+this.key+params, null, null)
+      return this.nativeHttp.get(this.googleApi + "place/autocomplete/json?input="+input+"&key="+this.key+params, null, null)
     }
-    return this.http.get(this.googleApi + "autocomplete/json?input="+input+"&key="+this.key+params)
+    return this.http.get(this.googleApi + "place/autocomplete/json?input="+input+"&key="+this.key+params)
       .map(res => res.json());
   }
 
@@ -71,12 +73,11 @@ export class PlacesAutocompleteComponent {
     if (val && val.trim().length > 3) {
       if (this.platform.is('cordova') && this.platform.is('ios')) {
         this.autocomplete(val).then(res => {
-          console.log(res)
           this.locals = JSON.parse(res.data).predictions
         })
       } else {
         this.autocomplete(val).subscribe(res => {
-          this.locals = res.predictions;
+          this.locals = res.predictions.filter((item) => item.place_id);
         });
       }
     } else {
@@ -85,7 +86,37 @@ export class PlacesAutocompleteComponent {
   }
 
   detail(item) {
-    this.callback.emit([item]);
-    this.locals = [];
+    const promises = []
+    if (this.platform.is('cordova') && this.platform.is('ios')) {
+      promises.push(this.nativeHttp.get(
+        this.googleApi + "geocode/json?place_id="+item.place_id+"&key="+this.key, null, null
+      ))
+    } else {
+      promises.push(
+        this.http.get(this.googleApi + "geocode/json?place_id="+item.place_id+"&key="+this.key).toPromise()
+      )
+    }
+    Promise.all(promises).then((e:any) => {
+      let resp
+      if (this.platform.is('cordova') && this.platform.is('ios')) {
+        resp = JSON.parse(e[0].data)
+      } else {
+        resp = e[0].json()
+      }
+      this.query = item.description
+      let location 
+      try {
+        location = resp.results[0].geometry.location
+      } catch (error) {
+        return this.alertCtrl.create({
+          message: 'Oooops, can\'t find a location for this place',
+          buttons: [{
+            text: 'Ok'
+          }]
+        })
+      }
+      this.callback.emit([location]);
+      this.locals = [];
+    })
   }
 }

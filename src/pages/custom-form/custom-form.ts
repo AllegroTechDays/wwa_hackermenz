@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the CustomFormPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -14,12 +8,36 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'custom-form.html',
 })
 export class CustomFormPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  time: any = {
+    upper:300,
+    lower:5
   }
+  speed: any = {
+    upper:40,
+    lower:5
+  }
+  bikeType = 'none'
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CustomFormPage');
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams
+  ) { }
+
+  next() {
+    const params: any = {
+      ...this.navParams.get('params') || {},
+      averageSpeed_from: this.speed.lower,
+      averageSpeed_to: this.speed.upper,
+      duration_from: this.time.lower * 60,
+      duration_to: this.time.upper * 60
+    }
+    if (this.bikeType !== 'none') {
+      params.bikeType = this.bikeType
+    }
+    const opts = {
+      ...this.navParams.get('opts') || {}
+    }
+    this.navCtrl.push('ChooseRoutePage', { params, opts })
   }
 
 }

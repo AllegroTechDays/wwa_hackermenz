@@ -1,18 +1,42 @@
-<!--
-  Generated template for the CustomFormPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>custom-form</ion-title>
+    <ion-title>Route preferences</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
 <ion-content padding>
+  <ion-list no-lines>
+    <ion-list-header>Time</ion-list-header>
+    <ion-item>
+      <ion-range mode="ios" min="5" max="300" step="1" [(ngModel)]="time" color="primary" dualKnobs="true">
+        <ion-label range-left>{{ time.lower }}</ion-label>
+        <ion-label range-right>{{ time.upper }}</ion-label>
+      </ion-range>
+    </ion-item>
 
+    <ion-list-header>Avg. speed</ion-list-header>
+    <ion-item>
+      <ion-range mode="ios" min="5" max="40" step="1" [(ngModel)]="speed" color="primary" dualKnobs="true">
+        <ion-label range-left>{{ speed.lower }}</ion-label>
+        <ion-label range-right>{{ speed.upper }}</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bike type</ion-label>
+      <ion-select [(ngModel)]="bikeType">
+        <ion-option value="none">None</ion-option>
+        <ion-option value="BIKE_CITY">City</ion-option>
+        <ion-option value="BIKE_MOUNTAIN">Mountain</ion-option>
+        <ion-option value="BIKE_ROAD">Road</ion-option>
+        <ion-option value="BIKE_TREKKING">Trekking</ion-option>
+        <ion-option value="BIKE_ELECTRIC">Electric</ion-option>
+        <ion-option value="BIKE_STATIONARY">Stationary</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+<ion-footer padding>
+  <button ion-button full (click)="next()">Next</button>
+</ion-footer>

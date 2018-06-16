@@ -16,6 +16,7 @@ import { GooglePlacesAutocompleteComponentModule } from 'ionic2-google-places-au
 import { SelectTypePageModule } from '../pages/select-type/select-type.module';
 import { ApiProvider } from '../providers/api/api';
 import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { HttpClientModule } from '@angular/common/http';
     ChooseRoutePageModule,
     CustomFormPageModule,
     SelectTypePageModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
