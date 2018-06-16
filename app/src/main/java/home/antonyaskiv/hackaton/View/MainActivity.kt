@@ -83,8 +83,8 @@ class MainActivity : AppCompatActivity() {
             var distance = et_distance.text
             var withReturn = cb_with_return.isChecked
             var sex = rg_sex.checkedRadioButtonId
-            intent.putExtra("distance", distance)
-            intent.putExtra("withReturn", withReturn)
+            intent.putExtra("distance", distance.toString())
+            intent.putExtra("withReturn", withReturn.toString())
             intent.putExtra("sex", checkSex())
             startActivity(intent)
 

@@ -7,7 +7,7 @@ data class Request(var distance_from: String? = null, var distance_to: String? =
                    , var duration_from: String? = null, var duration_to: String? = null,
                    var maxSpeed_from: String? = null, var maxSpeed_to: String? = null,
                    var averageSpeed_from: String? = null, var averageSpeed_to: String? = null,
-                   var bikeType: Array<BikeType>? = null, var sourceMetadataRequest: SourceMetadataRequest? = null
+                   var bikeType: String? = null, var sourceMetadataRequest: SourceMetadataRequest? = null
                    , var weatherRequest: WeatherRequest? = null, var userMetadataRequest: UserMetadataRequest? = null, var locationRequest: LocationRequest)
 
 data class SourceMetadataRequest(var finishedAtDayNumber: Array<FinishedAtDayNumber>?, var createdAt_from: String?, var createdAt_to: String?)

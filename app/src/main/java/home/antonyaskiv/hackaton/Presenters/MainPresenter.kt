@@ -3,15 +3,12 @@ package home.antonyaskiv.hackaton.Presenters
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import com.google.android.gms.maps.MapView
 import home.antonyaskiv.hackaton.API.CallBackResponse
 import home.antonyaskiv.hackaton.API.HCallBack
 import home.antonyaskiv.hackaton.Application.App
 import home.antonyaskiv.hackaton.Model.*
 import home.antonyaskiv.hackaton.View.MapActivity
 import java.util.*
-import java.time.temporal.TemporalAdjusters.previous
-
 
 
 /**
@@ -38,19 +35,24 @@ class MainPresenter(val activity: MapActivity) {
 
     fun ClosedRange<Int>.random() =
             Random().nextInt(endInclusive - start) + start
-    var s_request: Request?=null
+
+    var s_request: Request? = null
     var coordinate: List<List<Double>>? = null
     fun getRandomRoad(request: Request) {
-        s_request=request
-        App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
+        s_request = request
+        App.service!!.getActivitys(fromParametersToMap(request))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
-                        var res=t[(0..t.size).random()]
-                        activity.showDetailes(res)
-                        coordinate = res.path.coordinates
-
+                        if(t.size>0) {
+                            var res = t[(0..t.size).random()]
+                            activity.showDetailes(res)
+                            coordinate = res.path.coordinates
+                        }else
+                        {
+                            activity.showToast();
+                        }
                         //TODO MAp
-                       // startMaps(t[(0..t.size).random()].path.coordinates)
+                        // startMaps(t[(0..t.size).random()].path.coordinates)
                     }
 
                     override fun onError(code: Int) {
@@ -62,30 +64,63 @@ class MainPresenter(val activity: MapActivity) {
                     }
                 }))
     }
+
     companion object {
-        var id =0
+        var id = 0
     }
+
     fun getSpeedRoad(request: Request) {
-        s_request=request
-        App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
+        s_request = request
+        App.service!!.getActivitys(fromParametersToMap(request))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
-                        var min_duration=100000
+                        var min_duration = 100000
 
-                        var count =0 ;
-                        for(res in t)
-                        {
-                         if(res.duration<min_duration) {
-                             min_duration = res.duration
-                             id=count;
-                         }
+                        var count = 0;
+                        for (res in t) {
+                            if (res.duration < min_duration) {
+                                min_duration = res.duration
+                                id = count;
+                            }
 
                             count++
                         }
-                        var res=t[id]
-                        activity.showDetailes(res)
-                        coordinate = res.path.coordinates
+                        if(t.isNotEmpty()) {
+                            var res = t[id]
+                            activity.showDetailes(res)
+                            coordinate = res.path.coordinates
+                        }
+                        else
+                        {
+                            activity.showToast();
+                        }
+                        //TODO MAp
+                        // startMaps(t[(0..t.size).random()].path.coordinates)
+                    }
 
+                    override fun onError(code: Int) {
+                        Log.d("Tag", "Error")
+                    }
+
+                    override fun onFail() {
+                        Log.d("Tag", "Fail")
+                    }
+                }))
+    }
+
+    fun getFilterRoad(request: Request) {
+        s_request = request
+        App.service!!.getActivitys(fromParametersToMap(request))
+                .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
+                    override fun onSuccess(t: List<Response>) {
+                        if(t.size>0) {
+                            var res = t[(0..t.size).random()]
+                            activity.showDetailes(res)
+                            coordinate = res.path.coordinates
+                        }else
+                        {
+                            activity.showToast();
+                        }
                         //TODO MAp
                         // startMaps(t[(0..t.size).random()].path.coordinates)
                     }
@@ -106,7 +141,7 @@ class MainPresenter(val activity: MapActivity) {
             var address = "http://maps.google.com/maps?saddr=" + s_request!!.locationRequest.latitude_from + "," + s_request!!.locationRequest.longitude_from + "&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
 
             for (i in 1..(t.size - 1)) {
-                var k =( t.size-1 )/ 20
+                var k = (t.size - 1) / 20
                 if (i % k == 0)
                     address += "+to:" + t[i][1].toString() + "," + t[i][0].toString()
             }
@@ -169,18 +204,9 @@ class MainPresenter(val activity: MapActivity) {
             hashMap["sourceMetadata:finishedAtDayNumber"] = k
         }
         if (request.bikeType != null) {
-            var k = ""
-            for (a in request.bikeType!!) {
-                when (a) {
-                    BikeType.City -> k += "BIKE_CITY,"
-                    BikeType.Electric -> k += "BIKE_ELECTRIC,"
-                    BikeType.Mountain -> k += "BIKE_MOUNTAIN,"
-                    BikeType.Road -> k += "BIKE_ROAD,"
-                    BikeType.Stationary -> k += "BIKE_STATIONARY,"
-                    BikeType.Trekking -> k += "BIKE_TREKKING,"
-                }
-            }
-            hashMap["bikeType"] = k
+            var k =request.bikeType
+            var K=k!!.toUpperCase()
+            hashMap["bikeType"] = "BIKE_$K"
         }
         if (request.sourceMetadataRequest != null && request.sourceMetadataRequest!!.createdAt_from != null)
             hashMap["sourceMetadata:createdAt_from"] = request.sourceMetadataRequest!!.createdAt_from!!

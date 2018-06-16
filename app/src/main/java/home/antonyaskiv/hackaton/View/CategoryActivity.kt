@@ -12,12 +12,9 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.FusedLocationApi
-import home.antonyaskiv.hackaton.Model.Request
-import home.antonyaskiv.hackaton.Presenters.MainPresenter
 import home.antonyaskiv.hackaton.R
 import kotlinx.android.synthetic.main.activity_category.*
 import java.security.AccessController.getContext
@@ -84,13 +81,18 @@ class CategoryActivity : AppCompatActivity() {
 
         cv_category_filtered.setOnClickListener { v ->
             if (!lng.isEmpty() && lastLocation != null) {
+
                 var intent = Intent(this, FiltersActivity::class.java)
                 intent.putExtra("type", "filter")
                 intent.putExtra("lng_to", lng)
                 intent.putExtra("lat_to", lat)
                 intent.putExtra("lng_from", lastLocation!!.longitude.toString())
                 intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                if (distance != null)
+                    intent.putExtra("distance", distance)
                 startActivity(intent)
+            } else {
+                checkLatLng()
             }
         }
 
@@ -102,7 +104,11 @@ class CategoryActivity : AppCompatActivity() {
                 intent.putExtra("lat_to", lat)
                 intent.putExtra("lng_from", lastLocation!!.longitude.toString())
                 intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                if (distance != null)
+                    intent.putExtra("distance", distance)
                 startActivity(intent)
+            } else {
+                checkLatLng()
             }
             Log.d("bla", lastLocation.toString())
         }
@@ -115,10 +121,21 @@ class CategoryActivity : AppCompatActivity() {
                 intent.putExtra("lat_to", lat)
                 intent.putExtra("lng_from", lastLocation!!.longitude.toString())
                 intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                if (distance != null)
+                    intent.putExtra("distance", distance)
                 startActivity(intent)
+            } else {
+                checkLatLng()
             }
         }
 
+    }
+
+    private fun checkLatLng() {
+        if (lat.isEmpty() || lng.isEmpty()) {
+            lat = lastLocation!!.latitude.toString()
+            lng = lastLocation!!.longitude.toString()
+        }
     }
 
     private fun createGoogleApiClientIfNeeded() {
@@ -127,8 +144,6 @@ class CategoryActivity : AppCompatActivity() {
                     .addApi(LocationServices.API).build()
         }
     }
-
-
 
 
     @SuppressLint("RestrictedApi")
