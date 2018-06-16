@@ -1,14 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="home.antonyaskiv.hackaton.MainActivity">
+    android:layout_margin="20dp"
+    android:orientation="vertical"
+    style="@style/Theme.AppCompat.NoActionBar">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:onClick="Click"/>
+    <LinearLayout
+        android:id="@+id/ll_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/black10"
+            android:text="@string/distance"/>
+
+        <TextView
+            android:text="@string/destination"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/black10"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_tabs">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelAlwaysShown="true"
+                app:met_floatingLabelText="@string/destination"
+                app:met_floatingLabelTextSize="@dimen/text_title"
+                app:met_helperText="@string/address"
+                android:textSize="@dimen/text_normal"
+                app:met_helperTextAlwaysShown="true" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="@dimen/text_description"
+                android:text="@string/route_return" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:text="@string/checkbox_return" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_title"
+                android:text="@string/return_back" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:met_floatingLabel="normal"
+                app:met_floatingLabelAlwaysShown="true"
+                app:met_floatingLabelText="@string/destination"
+                app:met_floatingLabelTextSize="@dimen/text_title"
+                app:met_helperText="@string/address"
+                android:textSize="@dimen/text_normal"
+                app:met_helperTextAlwaysShown="true" />
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fl_content"
+        android:layout_marginTop="10dp"
+        android:textSize="@dimen/text_description"
+        android:text="@string/sex" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_sex">
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:text="@string/male" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:textSize="@dimen/text_normal"
+            android:layout_height="wrap_content"
+            android:text="@string/female" />
+
+    </RadioGroup>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="true"
+        android:onClick="Click"
+        android:text="@string/next"/>
+
+</RelativeLayout>

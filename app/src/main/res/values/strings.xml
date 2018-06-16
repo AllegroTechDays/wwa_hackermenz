@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">Hackaton</string>
+    <string name="app_name">BikeFilterNavigation</string>
+    <string name="title_main">Choose prefered road</string>
+    <string name="category_name_speed">Speed</string>
+    <string name="category_name_filtered">Filtered</string>
+    <string name="category_name_random">Random</string>
+    <string name="destination">Destination</string>
+    <string name="distance_ride">Distance you want to ride</string>
+    <string name="route_return">Route to return</string>
+    <string name="checkbox_return">With return</string>
+    <string name="return_back">Do you want to return back?</string>
+    <string name="address">Address</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="sex">Sex</string>
+    <string name="next">Next</string>
+    <string name="distance">Distance</string>
+    <string name="time">Time (minutes)</string>
+    <string name="avg_speed">Average speed (km/h)</string>
+    <string name="type_bike">Bike type</string>
 </resources>
