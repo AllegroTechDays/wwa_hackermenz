@@ -1,5 +1,6 @@
-package home.antonyaskiv.hackaton
+package home.antonyaskiv.hackaton.View
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -8,22 +9,84 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlaceAutocomplete
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
+import com.google.android.gms.location.places.ui.PlaceSelectionListener
+import com.google.android.gms.maps.model.LatLng
 import home.antonyaskiv.hackaton.API.CallBackResponse
 import home.antonyaskiv.hackaton.API.HCallBack
 import home.antonyaskiv.hackaton.Application.App.Companion.service
 import home.antonyaskiv.hackaton.Model.*
+import home.antonyaskiv.hackaton.R
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
+    private var PLACE_AUTOCOMPLETE_REQUEST_CODE = 1
+    private lateinit var destination : LatLng
+    private var tabActive : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        tab_distance.setOnClickListener{ v ->
+            ll_distance.visibility = View.VISIBLE
+            ll_destination.visibility = View.GONE
+            tabActive = 0
+        }
+
+        tab_destination.setOnClickListener{ v ->
+            ll_distance.visibility = View.GONE
+            ll_destination.visibility = View.VISIBLE
+            tabActive = 1
+        }
+
+        var autocompleteFragment = fragmentManager.findFragmentById(R.id.place_autocomplete_fragment) as PlaceAutocompleteFragment
+
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+                destination = LatLng(place.latLng.latitude,place.latLng.longitude)
+                Log.i("TagTest", "Place: " + place.name)
+            }
+
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i("TagTest", "An error occurred: $status")
+            }
+        })
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val place = PlaceAutocomplete.getPlace(this, data)
+                Log.i("TagTest", "Place: " + place.name)
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                val status = PlaceAutocomplete.getStatus(this, data)
+                // TODO: Handle the error.
+                Log.i("TagTest", status.statusMessage)
+
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
     fun Click(view: View) {
-        getActivities()
+        if(tabActive == 0) {
+            var distance = et_distance.text
+            var withReturn = cb_with_return.isChecked
+            var sex = rg_sex.checkedRadioButtonId
+        } else if (tabActive == 1){
+            var sex = rg_sex.checkedRadioButtonId
+        }
+
+        //getActivities()
     }
 
     fun getActivities() {

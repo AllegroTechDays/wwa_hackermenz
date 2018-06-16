@@ -10,13 +10,16 @@
         android:supportsRtl="true"
         android:name=".Application.App"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD4zAPWmnZFBowwTXuy9F0IHZX-Jhl-MTg"/>
     </application>
 <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>
