@@ -73,6 +73,7 @@ class CategoryActivity : AppCompatActivity() {
             distance = intent.getStringExtra("distance")
             withReturn = intent.getStringExtra("withReturn")
             sex = intent.getStringExtra("sex")
+            checkLatLng()
         } else if (intent.hasExtra("lng")) {
             lng = intent.getStringExtra("lng")
             lat = intent.getStringExtra("lat")
@@ -83,59 +84,80 @@ class CategoryActivity : AppCompatActivity() {
         cv_category_filtered.setOnClickListener { v ->
             if (!lng.isEmpty() && lastLocation != null) {
 
-                var intent = Intent(this, FiltersActivity::class.java)
-                intent.putExtra("type", "filter")
-                intent.putExtra("lng_to", lng)
-                intent.putExtra("lat_to", lat)
-                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
-                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
-                if (distance != null)
-                    intent.putExtra("distance", distance)
-                startActivity(intent)
+                startFilters()
             } else {
-                checkLatLng()
+                Thread.sleep(300)
+                startFilters()
             }
         }
 
         cv_category_random.setOnClickListener { v ->
             if (!lng.isEmpty() && lastLocation != null) {
-                var intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("type", "random")
-                intent.putExtra("lng_to", lng)
-                intent.putExtra("lat_to", lat)
-                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
-                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
-                if (distance != null)
-                    intent.putExtra("distance", distance)
-                startActivity(intent)
+                startMaps()
             } else {
-                checkLatLng()
+                Thread.sleep(300)
+                startMaps()
+
             }
             Log.d("bla", lastLocation.toString())
         }
 
         cv_category_speed.setOnClickListener { v ->
             if (!lng.isEmpty() && lastLocation != null) {
-                var intent = Intent(this, MapActivity::class.java)
-                intent.putExtra("type", "speed")
-                intent.putExtra("lng_to", lng)
-                intent.putExtra("lat_to", lat)
-                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
-                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
-                if (distance != null)
-                    intent.putExtra("distance", distance)
-                startActivity(intent)
+                startMap()
             } else {
-                checkLatLng()
+                Thread.sleep(300)
+                startMap()
+
             }
         }
 
     }
 
+    private fun startMap() {
+        var intent = Intent(this, MapActivity::class.java)
+        intent.putExtra("type", "speed")
+        intent.putExtra("lng_to", lng)
+        intent.putExtra("lat_to", lat)
+        intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+        intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+        if (distance != null)
+            intent.putExtra("distance", distance)
+        startActivity(intent)
+    }
+
+    private fun startMaps() {
+        var intent = Intent(this, MapActivity::class.java)
+        intent.putExtra("type", "random")
+        intent.putExtra("lng_to", lng)
+        intent.putExtra("lat_to", lat)
+        intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+        intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+        if (distance != null)
+            intent.putExtra("distance", distance)
+        startActivity(intent)
+    }
+
+    private fun startFilters() {
+        var intent = Intent(this, FiltersActivity::class.java)
+        intent.putExtra("type", "filter")
+        intent.putExtra("lng_to", lng)
+        intent.putExtra("lat_to", lat)
+        intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+        intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+        if (distance != null)
+            intent.putExtra("distance", distance)
+        startActivity(intent)
+    }
+
     private fun checkLatLng() {
+
         if (lat.isEmpty() || lng.isEmpty()) {
-            lat = lastLocation!!.latitude.plus(0.03).toString()
-            lng = lastLocation!!.longitude.minus(0.03).toString()
+
+            lat = "52.2216726"
+            lng = "21.0275746"
+
+
         }
     }
 

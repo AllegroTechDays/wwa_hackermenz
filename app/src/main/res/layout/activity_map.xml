@@ -32,6 +32,8 @@
                 android:id="@+id/next_way"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/background_button"
+                android:textColor="@android:color/white"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:text="@string/next" />
@@ -118,6 +120,7 @@
         android:background="@drawable/background_button"
         android:textColor="@android:color/white"
         android:onClick="Click"
-        android:text="@string/next"/>
+        android:layout_marginBottom="10dp"
+        android:text="@string/navigation"/>
 
 </RelativeLayout>
