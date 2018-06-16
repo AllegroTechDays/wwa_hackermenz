@@ -43,7 +43,7 @@ class MapActivity : AppCompatActivity() {
                 lat_from = intent.getStringExtra("lat_from")
                 if (intent.hasExtra("distance") && intent.getStringExtra("distance") != null) {
                     distance = intent.getStringExtra("distance")
-                    mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!), distance_to = distance))
+                    mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!), distance_to = distance,distance_from = "0"))
 
                 } else
                     mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!)))
@@ -56,7 +56,7 @@ class MapActivity : AppCompatActivity() {
                 lat_from = intent.getStringExtra("lat_from")
                 if (intent.hasExtra("distance") && intent.getStringExtra("distance") != null) {
                     distance = intent.getStringExtra("distance")
-                    mainPresenter.getSpeedRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!), distance_to = distance))
+                    mainPresenter.getSpeedRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!), distance_to = distance,distance_from = "0"))
 
                 } else
                     mainPresenter.getSpeedRoad(Request(locationRequest = LocationRequest(lng_from!!, lat_from!!, lng_to!!, lat_to!!)))
@@ -80,7 +80,7 @@ class MapActivity : AppCompatActivity() {
                             duration_to = secundToMinutes(timeRight)
                             , averageSpeed_from = speedLeft,
                             averageSpeed_to = speedRight,
-                            bikeType = BikeType, distance_to = distance))
+                            bikeType = BikeType, distance_to = distance,distance_from = "0"))
                 } else {
 
                     mainPresenter.getFilterRoad(Request(

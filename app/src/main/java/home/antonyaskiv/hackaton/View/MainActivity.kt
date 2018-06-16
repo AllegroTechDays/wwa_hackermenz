@@ -13,9 +13,6 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
 import com.google.android.gms.maps.model.LatLng
-import home.antonyaskiv.hackaton.Model.LocationRequest
-import home.antonyaskiv.hackaton.Model.Request
-import home.antonyaskiv.hackaton.Presenters.MainPresenter
 import home.antonyaskiv.hackaton.View.CategoryActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -25,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private var destination: LatLng? = null
 
     private var tabActive: Int = 0
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +85,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
 
 
-
         } else if (tabActive == 1 && destination != null) {
 
             intent.putExtra("sex", checkSex())
@@ -100,8 +95,11 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Error with data", Toast.LENGTH_SHORT).show()
     }
 
-    private fun checkSex() : String {
-        return "M"
+    private fun checkSex(): String {
+        if (male.isChecked)
+            return "M"
+        else
+            return "F"
     }
 
 

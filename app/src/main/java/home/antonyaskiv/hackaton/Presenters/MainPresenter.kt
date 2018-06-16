@@ -6,7 +6,10 @@ import android.util.Log
 import home.antonyaskiv.hackaton.API.CallBackResponse
 import home.antonyaskiv.hackaton.API.HCallBack
 import home.antonyaskiv.hackaton.Application.App
-import home.antonyaskiv.hackaton.Model.*
+import home.antonyaskiv.hackaton.Model.FinishedAtDayNumber
+import home.antonyaskiv.hackaton.Model.LocationRequest
+import home.antonyaskiv.hackaton.Model.Request
+import home.antonyaskiv.hackaton.Model.Response
 import home.antonyaskiv.hackaton.View.MapActivity
 import java.util.*
 
@@ -43,12 +46,11 @@ class MainPresenter(val activity: MapActivity) {
         App.service!!.getActivitys(fromParametersToMap(request))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
-                        if(t.size>0) {
+                        if (t.size > 0) {
                             var res = t[(0..t.size).random()]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
-                        }else
-                        {
+                        } else {
                             activity.showToast();
                         }
                         //TODO MAp
@@ -85,13 +87,11 @@ class MainPresenter(val activity: MapActivity) {
 
                             count++
                         }
-                        if(t.isNotEmpty()) {
+                        if (t.isNotEmpty()) {
                             var res = t[id]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
-                        }
-                        else
-                        {
+                        } else {
                             activity.showToast();
                         }
                         //TODO MAp
@@ -113,12 +113,11 @@ class MainPresenter(val activity: MapActivity) {
         App.service!!.getActivitys(fromParametersToMap(request))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
-                        if(t.size>0) {
+                        if (t.size > 0) {
                             var res = t[(0..t.size).random()]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
-                        }else
-                        {
+                        } else {
                             activity.showToast();
                         }
                         //TODO MAp
@@ -136,14 +135,16 @@ class MainPresenter(val activity: MapActivity) {
     }
 
     private fun startMaps(t: List<List<Double>>) {
-
+        var count = 0
         if (t.isNotEmpty()) {
             var address = "http://maps.google.com/maps?saddr=" + s_request!!.locationRequest.latitude_from + "," + s_request!!.locationRequest.longitude_from + "&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
 
             for (i in 1..(t.size - 1)) {
                 var k = (t.size - 1) / 20
-                if (i % k == 0)
+                if (i % k == 0 && count < 20) {
+                    count++
                     address += "+to:" + t[i][1].toString() + "," + t[i][0].toString()
+                }
             }
             address += "+to:" + s_request!!.locationRequest.latitude_to + "," + s_request!!.locationRequest.longitude_to
 
@@ -204,8 +205,8 @@ class MainPresenter(val activity: MapActivity) {
             hashMap["sourceMetadata:finishedAtDayNumber"] = k
         }
         if (request.bikeType != null) {
-            var k =request.bikeType
-            var K=k!!.toUpperCase()
+            var k = request.bikeType
+            var K = k!!.toUpperCase()
             hashMap["bikeType"] = "BIKE_$K"
         }
         if (request.sourceMetadataRequest != null && request.sourceMetadataRequest!!.createdAt_from != null)

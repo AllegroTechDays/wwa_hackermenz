@@ -133,8 +133,8 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun checkLatLng() {
         if (lat.isEmpty() || lng.isEmpty()) {
-            lat = lastLocation!!.latitude.toString()
-            lng = lastLocation!!.longitude.toString()
+            lat = lastLocation!!.latitude.plus(0.03).toString()
+            lng = lastLocation!!.longitude.minus(0.03).toString()
         }
     }
 
