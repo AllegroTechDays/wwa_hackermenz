@@ -17,7 +17,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".View.CategoryActivity">
+
+        </activity>
         <activity android:name=".FiltersActivity"/>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyD4zAPWmnZFBowwTXuy9F0IHZX-Jhl-MTg" />
     </application>
 <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

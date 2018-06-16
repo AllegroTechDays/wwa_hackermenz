@@ -43,4 +43,5 @@ dependencies {
     implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
 implementation 'com.github.PGrube26:RangeSeekBar:1.0.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
+    implementation 'com.google.android.gms:play-services:12.0.1'
 }
