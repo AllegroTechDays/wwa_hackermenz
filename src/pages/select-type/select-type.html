@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Select type</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div class="select-type__types">
+    <div 
+      class="select-type__type-item"
+      tappable
+      *ngFor="let item of types"
+      (click)="selectType(item.value)"
+      [ngStyle]="{backgroundImage: 'url(assets/imgs/'+item.value+'.png)'}">
+      <div 
+        class="select-type__type-item-background"
+        [ngStyle]="{backgroundColor: item.color}"></div>
+      <div class="select-type__type-item-title">
+        {{ item.name }}
+      </div>
+    </div>
+  </div>
+</ion-content>

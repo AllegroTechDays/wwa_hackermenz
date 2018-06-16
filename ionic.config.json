@@ -1,6 +1,16 @@
+
 {
   "name": "routy-route",
   "app_id": "",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  },
+  "proxies": [{
+    "path": "/google-place-api/",
+    "proxyUrl": "https://maps.googleapis.com/maps/api/place/"
+  }, {
+    "path": "/rowerowa-polska-api/",
+    "proxyUrl": "https://api.rowerowapolska.pl/"
+  }]
 }

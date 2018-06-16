@@ -7,8 +7,22 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
+  mode:'distance'|'destination' = 'distance'
+
   constructor(public navCtrl: NavController) {
 
+  }
+
+  setMode(mode) {
+    this.mode = mode
+  }
+
+  placeSelected(e) {
+    console.log(e)
+  }
+
+  next() {
+    this.navCtrl.push('SelectTypePage')
   }
 
 }

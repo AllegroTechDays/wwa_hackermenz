@@ -1,3 +1,9 @@
 page-home {
-
+    .home__tabs {
+        display: flex;
+        justify-content: space-around;
+        .button {
+            flex: 1;
+        }
+    }
 }

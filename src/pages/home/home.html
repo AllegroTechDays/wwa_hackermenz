@@ -1,14 +1,75 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
-
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div class="home__tabs">
+    <button 
+      ion-button 
+      [clear]="mode !== 'distance'"
+      (click)="setMode('distance')">
+      Distance
+    </button>
+    <button 
+      ion-button 
+      [clear]="mode !== 'destination'"
+      (click)="setMode('destination')">
+      Destination
+    </button>
+  </div>
+  <div 
+    class="home__form home__form--distance" 
+    *ngIf="mode === 'distance'"
+    margin-top>
+    <ion-item>
+      <ion-label color="primary" stacked>Distance</ion-label>
+      <ion-input type="number" placeholder="e.g. 15 km"></ion-input>
+    </ion-item>
+    <ion-list>
+      <ion-list-header>
+        Route with return
+      </ion-list-header>
+      <ion-item>
+        <ion-label>With return</ion-label>
+        <ion-checkbox [(ngModel)]="pepperoni"></ion-checkbox>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div 
+    class="home__form home__form-destination"
+    *ngIf="mode === 'destination'"
+    margin-top>
+    <places-autocomplete 
+      (callback)="placeSelected($event[0])" 
+      key="AIzaSyDiLBpgYMpD6MLpyt-BMpPVWBdaQ8kUDnI"></places-autocomplete>
+  </div>
+  <div class="home__form-sex">
+    <ion-list radio-group [(ngModel)]="autoManufacturers">
+      <ion-list-header>
+        Sex
+      </ion-list-header>
+    
+      <ion-item>
+        <ion-label>Both</ion-label>
+        <ion-radio value="cord"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Female</ion-label>
+        <ion-radio value="duesenberg"></ion-radio>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Male</ion-label>
+        <ion-radio value="hudson"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
+
+<ion-footer padding>
+  <button 
+    ion-button 
+    icon-right 
+    full
+    (click)="next()">
+    Next
+    <ion-icon name="arrow-right"></ion-icon>
+  </button>
+</ion-footer>

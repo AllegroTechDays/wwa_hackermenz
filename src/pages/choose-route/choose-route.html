@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Choose route</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <route-preview 
+    *ngIf="currentPath" 
+    [path]="currentPath"></route-preview>
+  <div padding>
+    <ion-card class="choose-route__path-info" padding-bottom>
+      <div class="choose-route__path-info-head">
+        <div class="choose-route__path-info-title">
+          Route details
+        </div>
+        <button ion-button (click)="next()">Next</button>
+      </div>
+      <ion-grid [ngClass]="'choose-route__path-info-grid'">
+        <ion-row>
+          <ion-col>
+            Distance (km)
+          </ion-col>
+          <ion-col>
+            Time (min)
+          </ion-col>
+          <ion-col>
+            Avg. speed (km/h)
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            {{ distance || '-' }}
+          </ion-col>
+          <ion-col>
+            {{ time || '-' }}
+          </ion-col>
+          <ion-col>
+            {{ avgSpeed || '-' }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer padding>
+  <button 
+    ion-button 
+    full
+    (click)="launchNavigation()">Launch navigation</button>
+</ion-footer>

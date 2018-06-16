@@ -1,0 +1,25 @@
+page-choose-route {
+    .choose-route__path-info {
+
+    }
+    .choose-route__path-info-head {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 16px;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .choose-route__path-info-title {
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .choose-route__path-info-grid {
+        .row {
+            text-align: center;
+            &:first-child {
+                font-weight: bold;
+                color: #444;
+            }
+        }
+    }
+}
