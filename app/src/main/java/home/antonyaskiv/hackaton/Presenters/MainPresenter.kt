@@ -3,7 +3,6 @@ package home.antonyaskiv.hackaton.Presenters
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
-import com.google.android.gms.maps.MapView
 import home.antonyaskiv.hackaton.API.CallBackResponse
 import home.antonyaskiv.hackaton.API.HCallBack
 import home.antonyaskiv.hackaton.Application.App
@@ -45,7 +44,7 @@ class MainPresenter(val activity: MapActivity) {
                         activity.showDetailes(res)
                         coordinate = res.path.coordinates
 
-                        //TODO MAp
+                        activity.drawLines(coordinate!!)
                        // startMaps(t[(0..t.size).random()].path.coordinates)
                     }
 
