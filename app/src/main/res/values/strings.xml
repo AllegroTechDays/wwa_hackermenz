@@ -19,4 +19,5 @@
     <string name="avg_speed">Average speed (km/h)</string>
     <string name="type_bike">Bike type</string>
     <string name="text_distance">Distance</string>
+    <string name="navigation">Navigate</string>
 </resources>
