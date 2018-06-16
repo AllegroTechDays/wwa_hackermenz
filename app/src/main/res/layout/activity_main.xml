@@ -22,8 +22,8 @@
             android:gravity="center"
             android:textAllCaps="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@color/black10"
+            android:padding="10dp"
+            android:background="@drawable/background_tab_left"
             android:text="@string/distance"/>
 
         <TextView
@@ -32,9 +32,9 @@
             android:layout_width="0dp"
             android:gravity="center"
             android:textAllCaps="true"
-            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@color/black10"
+            android:padding="10dp"
+            android:background="@drawable/background_tab_right_dark"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             />
@@ -60,11 +60,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:inputType="number"
                 app:met_floatingLabel="normal"
+                android:layout_marginLeft="6dp"
                 app:met_floatingLabelAlwaysShown="true"
                 app:met_floatingLabelText="@string/distance"
                 app:met_floatingLabelTextSize="@dimen/text_title"
-                app:met_helperText="@string/address"
+                app:met_helperText="@string/kmh"
                 android:textSize="@dimen/text_normal"
                 app:met_helperTextAlwaysShown="true" />
 
@@ -76,6 +78,7 @@
                 <!--android:text="@string/route_return" />-->
 
             <CheckBox
+                android:layout_marginTop="10dp"
                 android:id="@+id/cb_with_return"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -86,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_title"
+                android:layout_marginLeft="6dp"
                 android:text="@string/return_back" />
         </LinearLayout>
 
@@ -94,6 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
             android:visibility="gone">
 
             <fragment
@@ -102,6 +107,10 @@
                 android:layout_height="wrap_content"
                 android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                 />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimaryDark"/>
 
 
         </LinearLayout>
@@ -113,8 +122,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fl_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:textSize="@dimen/text_description"
+        android:layout_marginLeft="6dp"
         android:text="@string/sex" />
 
     <RadioGroup
@@ -125,6 +135,7 @@
 
         <RadioButton
             android:id="@+id/male"
+            android:checked="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_normal"
@@ -140,11 +151,13 @@
     </RadioGroup>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true"
+        android:background="@drawable/background_button"
+        android:textColor="@android:color/white"
         android:onClick="Click"
         android:text="@string/next"/>
 

@@ -50,6 +50,7 @@ class MainPresenter(val activity: MapActivity) {
                             var res = t[(0..t.size).random()]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
+                            activity.drawLines(coordinate!!)
                         } else {
                             activity.showToast();
                         }
@@ -91,6 +92,7 @@ class MainPresenter(val activity: MapActivity) {
                             var res = t[id]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
+                            activity.drawLines(coordinate!!)
                         } else {
                             activity.showToast();
                         }
@@ -117,6 +119,7 @@ class MainPresenter(val activity: MapActivity) {
                             var res = t[(0..t.size).random()]
                             activity.showDetailes(res)
                             coordinate = res.path.coordinates
+                            activity.drawLines(coordinate!!)
                         } else {
                             activity.showToast();
                         }

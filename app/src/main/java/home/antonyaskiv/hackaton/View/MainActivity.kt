@@ -27,16 +27,20 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        supportActionBar!!.hide()
         tab_distance.setOnClickListener { v ->
             ll_distance.visibility = View.VISIBLE
             ll_destination.visibility = View.GONE
+            tab_distance.setBackgroundResource(R.drawable.background_tab_left)
+            tab_destination.setBackgroundResource(R.drawable.background_tab_right_dark)
             tabActive = 0
         }
 
         tab_destination.setOnClickListener { v ->
             ll_distance.visibility = View.GONE
             ll_destination.visibility = View.VISIBLE
+            tab_distance.setBackgroundResource(R.drawable.background_tab_left_dark)
+            tab_destination.setBackgroundResource(R.drawable.background_tab_right)
             tabActive = 1
         }
 

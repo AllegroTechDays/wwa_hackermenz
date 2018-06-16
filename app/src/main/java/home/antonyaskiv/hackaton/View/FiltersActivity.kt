@@ -22,6 +22,7 @@ class FiltersActivity : AppCompatActivity() {
     lateinit var inte: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar!!.hide()
         setContentView(R.layout.activity_filters)
         inte = Intent(this, MapActivity::class.java)
         inte.putExtra("type", "filter")
@@ -59,8 +60,7 @@ class FiltersActivity : AppCompatActivity() {
     data class SimpleDataClass(private val label: String, val value: Int) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
-                parcel.readInt()) {
-        }
+                parcel.readInt())
 
         override fun toString() = label
         override fun writeToParcel(parcel: Parcel, flags: Int) {
