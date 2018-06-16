@@ -85,8 +85,6 @@ class MainActivity : AppCompatActivity() {
         } else if (tabActive == 1){
             var sex = rg_sex.checkedRadioButtonId
         }
-
-        //getActivities()
     }
 
     fun getActivities() {
