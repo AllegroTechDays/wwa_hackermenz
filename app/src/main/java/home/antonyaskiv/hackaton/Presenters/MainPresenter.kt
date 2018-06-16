@@ -3,17 +3,18 @@ package home.antonyaskiv.hackaton.Presenters
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
+import com.google.android.gms.maps.MapView
 import home.antonyaskiv.hackaton.API.CallBackResponse
 import home.antonyaskiv.hackaton.API.HCallBack
 import home.antonyaskiv.hackaton.Application.App
-import home.antonyaskiv.hackaton.MainActivity
 import home.antonyaskiv.hackaton.Model.*
+import home.antonyaskiv.hackaton.View.MapActivity
 import java.util.*
 
 /**
  * Created by AntonYaskiv on 16.06.2018.
  */
-class MainPresenter(val activity: MainActivity) {
+class MainPresenter(val activity: MapActivity) {
     fun getActivities(value: Int, request: Request) {
 
         App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
@@ -35,12 +36,17 @@ class MainPresenter(val activity: MainActivity) {
     fun ClosedRange<Int>.random() =
             Random().nextInt(endInclusive - start) + start
 
+    var coordinate: List<List<Double>>? = null
     fun getRandomRoad(request: Request) {
         App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
+                        var res=t[(0..t.size).random()]
+                        activity.showDetailes(res)
+                        coordinate = res.path.coordinates
 
-                        startMaps(t[(0..t.size).random()].path.coordinates)
+                        //TODO MAp
+                       // startMaps(t[(0..t.size).random()].path.coordinates)
                     }
 
                     override fun onError(code: Int) {
@@ -56,12 +62,13 @@ class MainPresenter(val activity: MainActivity) {
     private fun startMaps(t: List<List<Double>>) {
 
         if (t.isNotEmpty()) {
-            var address = "http://maps.google.com/maps?saddr="+t[t.size - 1][1].toString() + "," + t[t.size - 1][0].toString()+"&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
+            var address = "http://maps.google.com/maps?saddr=" + t[t.size - 1][1].toString() + "," + t[t.size - 1][0].toString() + "&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
             for (i in 1..t.size - 1) {
                 var k = t.size / 20
                 if (i % k == 0)
                     address += "+to:" + t[i][1].toString() + "," + t[i][0].toString()
             }
+
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(address))
             activity.startActivity(intent)
 

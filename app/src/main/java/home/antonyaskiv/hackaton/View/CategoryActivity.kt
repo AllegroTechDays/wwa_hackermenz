@@ -12,16 +12,15 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.View
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.FusedLocationApi
+import home.antonyaskiv.hackaton.Model.Request
+import home.antonyaskiv.hackaton.Presenters.MainPresenter
 import home.antonyaskiv.hackaton.R
 import kotlinx.android.synthetic.main.activity_category.*
 import java.security.AccessController.getContext
-
-
-
-
 
 
 class CategoryActivity : AppCompatActivity() {
@@ -31,6 +30,7 @@ class CategoryActivity : AppCompatActivity() {
     private var googleApiClient: GoogleApiClient? = null
     private var locationRequest: LocationRequest? = null
     private var lastLocation: Location? = null
+
 
     private val locationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
@@ -53,6 +53,16 @@ class CategoryActivity : AppCompatActivity() {
         super.onStop()
     }
 
+    private var distance: String = ""
+
+    private var withReturn: String = ""
+
+    private var sex: String = ""
+
+    private var lat: String = ""
+
+    private var lng: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
@@ -61,16 +71,36 @@ class CategoryActivity : AppCompatActivity() {
             startLocationUpdates()
         }
 
+        if (intent.hasExtra("distance")) {
+            distance = intent.getStringExtra("distance")
+            withReturn = intent.getStringExtra("withReturn")
+            sex = intent.getStringExtra("sex")
+        } else if (intent.hasExtra("lng")) {
+            lng = intent.getStringExtra("lng")
+            lat = intent.getStringExtra("lat")
+            sex = intent.getStringExtra("sex")
+
+        }
+
         cv_category_filtered.setOnClickListener { v ->
-                Log.d("bla", lastLocation.toString())
+            Log.d("bla", lastLocation.toString())
         }
 
-        cv_category_random.setOnClickListener{ v ->
-                Log.d("bla", lastLocation.toString())
+        cv_category_random.setOnClickListener { v ->
+            if (!lng.isEmpty() && lastLocation != null) {
+                var intent = Intent(this, MapActivity::class.java)
+                intent.putExtra("type", "random")
+                intent.putExtra("lng_to", lng)
+                intent.putExtra("lat_to", lat)
+                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                startActivity(intent)
+            }
+            Log.d("bla", lastLocation.toString())
         }
 
-        cv_category_speed.setOnClickListener{ v ->
-                Log.d("bla", lastLocation.toString())
+        cv_category_speed.setOnClickListener { v ->
+            Log.d("bla", lastLocation.toString())
         }
 
     }
@@ -81,6 +111,9 @@ class CategoryActivity : AppCompatActivity() {
                     .addApi(LocationServices.API).build()
         }
     }
+
+
+
 
     @SuppressLint("RestrictedApi")
     private fun createLocationRequestIfNeeded() {
@@ -111,7 +144,7 @@ class CategoryActivity : AppCompatActivity() {
         createLocationRequestIfNeeded()
         val builder = locationRequest?.let {
             LocationSettingsRequest.Builder()
-                .addLocationRequest(it)
+                    .addLocationRequest(it)
         }
 
         val locationSettingsResult = LocationServices.SettingsApi.checkLocationSettings(

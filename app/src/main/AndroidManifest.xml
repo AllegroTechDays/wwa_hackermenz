@@ -21,11 +21,14 @@
         <activity android:name=".View.CategoryActivity">
 
         </activity>
-        <activity android:name=".FiltersActivity"/>
+        <activity android:name=".View.FiltersActivity"/>
+        <activity android:name=".View.MapActivity"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyD4zAPWmnZFBowwTXuy9F0IHZX-Jhl-MTg" />
     </application>
 <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 </manifest>

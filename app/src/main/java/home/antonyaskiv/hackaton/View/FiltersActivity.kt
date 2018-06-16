@@ -1,9 +1,10 @@
-package home.antonyaskiv.hackaton
+package home.antonyaskiv.hackaton.View
 
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import home.antonyaskiv.hackaton.R
 import kotlinx.android.synthetic.main.activity_filters.*
 
 /**

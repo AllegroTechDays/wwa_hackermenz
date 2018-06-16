@@ -2,14 +2,40 @@ package home.antonyaskiv.hackaton.View
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.view.View
+import home.antonyaskiv.hackaton.Model.LocationRequest
+import home.antonyaskiv.hackaton.Model.Request
+import home.antonyaskiv.hackaton.Model.Response
+import home.antonyaskiv.hackaton.Presenters.MainPresenter
 import home.antonyaskiv.hackaton.R
 import kotlinx.android.synthetic.main.activity_map.*
 
-class MapActivity : AppCompatActivity(){
-
+class MapActivity : AppCompatActivity() {
+    var mainPresenter = MainPresenter(this)
+    lateinit var type: TypeOf
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        if (intent.hasExtra("type")) {
+            when (intent.getStringExtra("type")) {
+                "random" -> type = TypeOf.Random
+                "filter" -> type = TypeOf.Filter
+                "speed" -> type = TypeOf.Speed
+            }
+        }
+        when (type) {
+            TypeOf.Random -> {
+                var lng_to = intent.getStringExtra("lng_to")
+                var lat_to = intent.getStringExtra("lat_to")
+                var lng_from = intent.getStringExtra("lng_from")
+                var lat_from = intent.getStringExtra("lat_from")
+
+                mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from,lat_from,lng_to,lat_to)))
+
+
+            }
+        }
 
         next_way.setOnClickListener {
 
@@ -21,4 +47,24 @@ class MapActivity : AppCompatActivity(){
 
     }
 
+    fun ClickRandom(view: View) {
+        var request: Request = Request(locationRequest = LocationRequest("21.0472149", "52.2393962", "21.0156042", "52.2243564"))
+
+        mainPresenter.getRandomRoad(request)
+
+    }
+
+    fun showDetailes(res: Response) {
+        value_distance.text = res.distance.toString()
+        value_time.text = res.duration.toString()
+        value_speed.text = res.averageSpeed.toString()
+
+    }
+
+}
+
+enum class TypeOf {
+    Random,
+    Filter,
+    Speed
 }
