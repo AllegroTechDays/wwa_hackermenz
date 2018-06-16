@@ -12,12 +12,9 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.*
 import com.google.android.gms.location.LocationServices.FusedLocationApi
-import home.antonyaskiv.hackaton.Model.Request
-import home.antonyaskiv.hackaton.Presenters.MainPresenter
 import home.antonyaskiv.hackaton.R
 import kotlinx.android.synthetic.main.activity_category.*
 import java.security.AccessController.getContext
@@ -66,6 +63,7 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)
+        supportActionBar!!.hide()
         createGoogleApiClientIfNeeded()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             startLocationUpdates()

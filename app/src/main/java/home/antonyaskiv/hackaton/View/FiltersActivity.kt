@@ -18,6 +18,7 @@ class FiltersActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar!!.hide()
         setContentView(R.layout.activity_filters)
         rangeSeekBar1.setData(listOf(SimpleDataClass("Min", 0), SimpleDataClass("10", 10), SimpleDataClass("20", 20), SimpleDataClass("30", 30), SimpleDataClass("40", 40), SimpleDataClass("50", 50), SimpleDataClass("60", 60), SimpleDataClass("70", 70), SimpleDataClass("80", 80), SimpleDataClass("90", 90), SimpleDataClass("Max", 100)))
         rangeSeekBar2.setData(listOf(SimpleDataClass("Min", 0), SimpleDataClass("10", 10), SimpleDataClass("20", 20), SimpleDataClass("30", 30), SimpleDataClass("40", 40), SimpleDataClass("50", 50), SimpleDataClass("Max", 60)))
@@ -35,8 +36,7 @@ class FiltersActivity : AppCompatActivity() {
     data class SimpleDataClass(private val label: String, val value: Int) : Parcelable {
         constructor(parcel: Parcel) : this(
                 parcel.readString(),
-                parcel.readInt()) {
-        }
+                parcel.readInt())
 
         override fun toString() = label
         override fun writeToParcel(parcel: Parcel, flags: Int) {

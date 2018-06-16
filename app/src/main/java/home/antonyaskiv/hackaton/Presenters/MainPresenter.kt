@@ -9,7 +9,6 @@ import home.antonyaskiv.hackaton.Application.App
 import home.antonyaskiv.hackaton.Model.*
 import home.antonyaskiv.hackaton.View.MapActivity
 import java.util.*
-import java.time.temporal.TemporalAdjusters.previous
 
 
 
@@ -71,12 +70,12 @@ class MainPresenter(val activity: MapActivity) {
                     override fun onSuccess(t: List<Response>) {
                         var min_duration=100000
 
-                        var count =0 ;
+                        var count =0
                         for(res in t)
                         {
                          if(res.duration<min_duration) {
                              min_duration = res.duration
-                             id=count;
+                             id=count
                          }
 
                             count++

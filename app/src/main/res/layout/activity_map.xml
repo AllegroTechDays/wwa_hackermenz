@@ -110,12 +110,14 @@
 
     <Button
         android:id="@+id/navigate"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:textAllCaps="true"
+        android:background="@drawable/background_button"
+        android:textColor="@android:color/white"
         android:onClick="Click"
-        android:text="@string/navigation"/>
+        android:text="@string/next"/>
 
 </RelativeLayout>
