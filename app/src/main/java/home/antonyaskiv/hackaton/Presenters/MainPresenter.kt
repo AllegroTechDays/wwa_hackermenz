@@ -9,6 +9,9 @@ import home.antonyaskiv.hackaton.Application.App
 import home.antonyaskiv.hackaton.Model.*
 import home.antonyaskiv.hackaton.View.MapActivity
 import java.util.*
+import java.time.temporal.TemporalAdjusters.previous
+
+
 
 /**
  * Created by AntonYaskiv on 16.06.2018.
@@ -34,9 +37,10 @@ class MainPresenter(val activity: MapActivity) {
 
     fun ClosedRange<Int>.random() =
             Random().nextInt(endInclusive - start) + start
-
+    var s_request: Request?=null
     var coordinate: List<List<Double>>? = null
     fun getRandomRoad(request: Request) {
+        s_request=request
         App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
                 .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
                     override fun onSuccess(t: List<Response>) {
@@ -57,16 +61,55 @@ class MainPresenter(val activity: MapActivity) {
                     }
                 }))
     }
+    companion object {
+        var id =0
+    }
+    fun getSpeedRoad(request: Request) {
+        s_request=request
+        App.service!!.getActivitys(fromLocationToHashMap(request.locationRequest))
+                .enqueue(HCallBack(object : CallBackResponse<List<Response>>() {
+                    override fun onSuccess(t: List<Response>) {
+                        var min_duration=100000
+
+                        var count =0 ;
+                        for(res in t)
+                        {
+                         if(res.duration<min_duration) {
+                             min_duration = res.duration
+                             id=count;
+                         }
+
+                            count++
+                        }
+                        var res=t[id]
+                        activity.showDetailes(res)
+                        coordinate = res.path.coordinates
+
+                        //TODO MAp
+                        // startMaps(t[(0..t.size).random()].path.coordinates)
+                    }
+
+                    override fun onError(code: Int) {
+                        Log.d("Tag", "Error")
+                    }
+
+                    override fun onFail() {
+                        Log.d("Tag", "Fail")
+                    }
+                }))
+    }
 
     private fun startMaps(t: List<List<Double>>) {
 
         if (t.isNotEmpty()) {
-            var address = "http://maps.google.com/maps?saddr=" + t[t.size - 1][1].toString() + "," + t[t.size - 1][0].toString() + "&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
-            for (i in 1..t.size - 1) {
-                var k = t.size / 20
+            var address = "http://maps.google.com/maps?saddr=" + s_request!!.locationRequest.latitude_from + "," + s_request!!.locationRequest.longitude_from + "&daddr=" + t[0][1].toString() + "," + t[0][0].toString()
+
+            for (i in 1..(t.size - 1)) {
+                var k =( t.size-1 )/ 20
                 if (i % k == 0)
                     address += "+to:" + t[i][1].toString() + "," + t[i][0].toString()
             }
+            address += "+to:" + s_request!!.locationRequest.latitude_to + "," + s_request!!.locationRequest.longitude_to
 
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(address))
             activity.startActivity(intent)
@@ -148,5 +191,9 @@ class MainPresenter(val activity: MapActivity) {
         return hashMap
 
 
+    }
+
+    fun openNavigation() {
+        startMaps(coordinate!!)
     }
 }
