@@ -83,7 +83,15 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         cv_category_filtered.setOnClickListener { v ->
-            Log.d("bla", lastLocation.toString())
+            if (!lng.isEmpty() && lastLocation != null) {
+                var intent = Intent(this, FiltersActivity::class.java)
+                intent.putExtra("type", "filter")
+                intent.putExtra("lng_to", lng)
+                intent.putExtra("lat_to", lat)
+                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                startActivity(intent)
+            }
         }
 
         cv_category_random.setOnClickListener { v ->
@@ -100,7 +108,15 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         cv_category_speed.setOnClickListener { v ->
-            Log.d("bla", lastLocation.toString())
+            if (!lng.isEmpty() && lastLocation != null) {
+                var intent = Intent(this, MapActivity::class.java)
+                intent.putExtra("type", "speed")
+                intent.putExtra("lng_to", lng)
+                intent.putExtra("lat_to", lat)
+                intent.putExtra("lng_from", lastLocation!!.longitude.toString())
+                intent.putExtra("lat_from", lastLocation!!.latitude.toString())
+                startActivity(intent)
+            }
         }
 
     }

@@ -13,6 +13,14 @@ import kotlinx.android.synthetic.main.activity_map.*
 class MapActivity : AppCompatActivity() {
     var mainPresenter = MainPresenter(this)
     lateinit var type: TypeOf
+    private var lng_to: String?=null
+
+    private var lat_to: String?=null
+
+    private var lng_from: String?=null
+
+    private var lat_from: String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
@@ -26,23 +34,32 @@ class MapActivity : AppCompatActivity() {
         }
         when (type) {
             TypeOf.Random -> {
-                var lng_to = intent.getStringExtra("lng_to")
-                var lat_to = intent.getStringExtra("lat_to")
-                var lng_from = intent.getStringExtra("lng_from")
-                var lat_from = intent.getStringExtra("lat_from")
+                 lng_to = intent.getStringExtra("lng_to")
+                 lat_to = intent.getStringExtra("lat_to")
+                 lng_from = intent.getStringExtra("lng_from")
+                 lat_from = intent.getStringExtra("lat_from")
 
-                mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from,lat_from,lng_to,lat_to)))
+                mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from!!,lat_from!!,lng_to!!,lat_to!!)))
 
+            }
+            TypeOf.Speed -> {
+                lng_to = intent.getStringExtra("lng_to")
+                lat_to = intent.getStringExtra("lat_to")
+                lng_from = intent.getStringExtra("lng_from")
+                lat_from = intent.getStringExtra("lat_from")
+
+                mainPresenter.getSpeedRoad(Request(locationRequest = LocationRequest(lng_from!!,lat_from!!,lng_to!!,lat_to!!)))
 
             }
         }
 
         next_way.setOnClickListener {
+            mainPresenter.getRandomRoad(Request(locationRequest = LocationRequest(lng_from!!,lat_from!!,lng_to!!,lat_to!!)))
 
         }
 
         navigate.setOnClickListener {
-
+            mainPresenter.openNavigation()
         }
 
     }
