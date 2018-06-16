@@ -43,10 +43,10 @@ export class RoutePreviewComponent implements AfterViewInit {
     }
     this.mapPath = new google.maps.Polyline({
       path: this.path,
-      geodesic: true,
-      strokeColor: '#FF0000',
-      strokeOpacity: 1.0,
-      strokeWeight: 2
+      geodesic: false,
+      strokeColor: '#51A4FB',
+      strokeOpacity: .8,
+      strokeWeight: 4
     });
     this.mapPath.setMap(this.map);
 
